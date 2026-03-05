@@ -1,0 +1,6 @@
+﻿{"dict": [
+[1, {"_t":"ResourceConfig","_id":1,"Name":"木材","ResourceType":1,"GatherTime":3000,"GatherAmount":1,"MaxAmount":10,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Resource/Tree.prefab","GatherMotion":"GatherWood","WalkToOffset":1.2}],
+[2, {"_t":"ResourceConfig","_id":2,"Name":"石矿","ResourceType":2,"GatherTime":4000,"GatherAmount":1,"MaxAmount":8,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Resource/Stone.prefab","GatherMotion":"GatherStone","WalkToOffset":1.0}],
+[3, {"_t":"ResourceConfig","_id":3,"Name":"食物","ResourceType":3,"GatherTime":2000,"GatherAmount":2,"MaxAmount":20,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Resource/Bush.prefab","GatherMotion":"GatherFood","WalkToOffset":0.8}],
+]}
+

@@ -1,0 +1,8 @@
+﻿{"dict": [
+[1, {"_t":"BuildingConfig","_id":1,"Name":"仓库","BuildingType":1,"MaxWorkers":0,"CostWood":5,"CostStone":3,"CostFood":0,"BuildTime":10000,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Building/Storehouse.prefab","StorageCapacity":100}],
+[2, {"_t":"BuildingConfig","_id":2,"Name":"伐木场","BuildingType":2,"MaxWorkers":3,"CostWood":8,"CostStone":2,"CostFood":0,"BuildTime":15000,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Building/Lumbermill.prefab","StorageCapacity":0}],
+[3, {"_t":"BuildingConfig","_id":3,"Name":"采石场","BuildingType":3,"MaxWorkers":3,"CostWood":4,"CostStone":6,"CostFood":0,"BuildTime":15000,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Building/Quarry.prefab","StorageCapacity":0}],
+[4, {"_t":"BuildingConfig","_id":4,"Name":"农场","BuildingType":4,"MaxWorkers":4,"CostWood":6,"CostStone":0,"CostFood":0,"BuildTime":12000,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Building/Farm.prefab","StorageCapacity":0}],
+[5, {"_t":"BuildingConfig","_id":5,"Name":"村民小屋","BuildingType":5,"MaxWorkers":0,"CostWood":10,"CostStone":5,"CostFood":0,"BuildTime":20000,"PrefabPath":"Packages/cn.etetet.demores/Bundles/Building/House.prefab","StorageCapacity":0}],
+]}
+

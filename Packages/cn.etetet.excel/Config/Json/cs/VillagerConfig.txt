@@ -1,0 +1,4 @@
+﻿{"dict": [
+[2001, {"_t":"UnitConfig","_id":2001,"Type":5001,"Name":"村民","Position":1,"Height":170,"Weight":65}],
+]}
+
