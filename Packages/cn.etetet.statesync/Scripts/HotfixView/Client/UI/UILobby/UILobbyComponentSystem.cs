@@ -11,10 +11,8 @@ namespace ET.Client
         {
             ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
-            self.continueGame = rc.Get<GameObject>("ContinueGame");
-            self.newGame = rc.Get<GameObject>("NewGame");
-            self.quitGame = rc.Get<GameObject>("QuitGame");
-            self.continueGame.GetComponent<Button>().onClick.AddListener(() => { self.EnterMap().NoContext(); });
+            self.enterMap = rc.Get<GameObject>("EnterMap");
+            self.enterMap.GetComponent<Button>().onClick.AddListener(() => { self.EnterMap().NoContext(); });
         }
         
         public static async ETTask EnterMap(this UILobbyComponent self)
