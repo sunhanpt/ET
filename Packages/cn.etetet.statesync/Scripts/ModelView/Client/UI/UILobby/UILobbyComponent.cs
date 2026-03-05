@@ -7,7 +7,9 @@ namespace ET.Client
 	[ComponentOf(typeof(UI))]
 	public class UILobbyComponent : Entity, IAwake
 	{
-		public GameObject enterMap;
+		public GameObject continueGame;
+		public GameObject newGame;
+		public GameObject quitGame;
 		public Text text;
 	}
 }

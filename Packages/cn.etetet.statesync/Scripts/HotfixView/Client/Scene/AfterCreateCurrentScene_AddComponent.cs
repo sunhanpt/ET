@@ -7,6 +7,9 @@ namespace ET.Client
         {
             scene.AddComponent<UIComponent>();
             scene.AddComponent<ResourcesLoaderComponent>();
+            // 村庄模拟经营组件
+            scene.AddComponent<VillageComponent>();
+            scene.AddComponent<StorehouseComponent>();
             await ETTask.CompletedTask;
         }
     }

@@ -427,7 +427,7 @@
         },
         "runtime": {
           "ET.Core.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -435,7 +435,7 @@
       "ET.SourceGeneratorAttribute/1.0.0": {
         "runtime": {
           "ET.SourceGeneratorAttribute.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
