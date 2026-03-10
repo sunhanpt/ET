@@ -50,6 +50,32 @@ namespace ET
             bc.FinishBuild();
             bc.ApplyStorageBonus();
         }
+
+        /// <summary>
+        /// 根据服务端快照直接恢复建筑（不等待建造时间，直接设置 State）
+        /// </summary>
+        public static ETTask RestoreAsync(Scene scene, int buildingConfigId, float3 position, BuildingState state)
+        {
+            UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
+            VillageComponent village    = scene.GetComponent<VillageComponent>();
+
+            Unit building = unitComponent.AddChild<Unit, int>(buildingConfigId);
+            building.Position = position;
+            BuildingComponent bc = building.AddComponent<BuildingComponent, int>(buildingConfigId);
+            unitComponent.Add(building);
+            village.AddBuilding(building.Id);
+
+            // 直接应用服务端状态
+            if (state == BuildingState.Built)
+            {
+                bc.State = BuildingState.Built;
+                bc.ApplyStorageBonus();
+                EventSystem.Instance.Publish(scene, new BuildingFinished() { BuildingUnitId = building.Id });
+            }
+
+            EventSystem.Instance.Publish(scene, new AfterBuildingCreate() { BuildingUnit = building });
+            return ETTask.CompletedTask;
+        }
     }
 
     public struct AfterBuildingCreate
@@ -57,4 +83,3 @@ namespace ET
         public Unit BuildingUnit;
     }
 }
-

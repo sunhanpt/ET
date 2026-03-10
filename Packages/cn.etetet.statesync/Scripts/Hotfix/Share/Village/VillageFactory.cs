@@ -29,15 +29,20 @@ namespace ET
             return villager;
         }
 
-        /// <summary>创建资源节点 Unit</summary>
-        public static Unit CreateResourceNode(Scene scene, int resourceConfigId, float3 position)
+        /// <summary>创建资源节点 Unit（网络恢复时指定当前剩余量）</summary>
+        public static Unit CreateResourceNode(Scene scene, int resourceConfigId, float3 position, int currentAmount = -1)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             VillageComponent village    = scene.GetComponent<VillageComponent>();
 
             Unit node = unitComponent.AddChild<Unit, int>(resourceConfigId);
             node.Position = position;
-            node.AddComponent<ResourceNodeComponent, int>(resourceConfigId);
+            var resComp = node.AddComponent<ResourceNodeComponent, int>(resourceConfigId);
+            // 覆盖初始储量（-1 保持 Awake 里读 Config.MaxAmount 的默认值）
+            if (currentAmount >= 0)
+            {
+                resComp.CurrentAmount = currentAmount;
+            }
 
             unitComponent.Add(node);
             village.AddResourceNode(node.Id);

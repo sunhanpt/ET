@@ -860,5 +860,184 @@ namespace ET
         public const ushort M2C_TransferMap = 11026;
         public const ushort C2G_Benchmark = 11027;
         public const ushort G2C_Benchmark = 11028;
+        public const ushort VillageResourceInfo = 11029;
+        public const ushort VillageBuildingInfo = 11030;
+        public const ushort VillagerInfo = 11031;
+        public const ushort VillageResourceStock = 11032;
+        public const ushort C2M_EnterVillage = 11033;
+        public const ushort M2C_EnterVillage = 11034;
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.VillageResourceInfo)]
+    public partial class VillageResourceInfo : MessageObject
+    {
+        public static VillageResourceInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<VillageResourceInfo>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int ConfigId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int CurrentAmount { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.ConfigId = default;
+            this.Position = default;
+            this.CurrentAmount = default;
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.VillageBuildingInfo)]
+    public partial class VillageBuildingInfo : MessageObject
+    {
+        public static VillageBuildingInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<VillageBuildingInfo>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int ConfigId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int State { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.ConfigId = default;
+            this.Position = default;
+            this.State = default;
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.VillagerInfo)]
+    public partial class VillagerInfo : MessageObject
+    {
+        public static VillagerInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<VillagerInfo>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int GatheringResourceType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.Position = default;
+            this.GatheringResourceType = default;
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.VillageResourceStock)]
+    public partial class VillageResourceStock : MessageObject
+    {
+        public static VillageResourceStock Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<VillageResourceStock>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int ResourceType { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Amount { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.ResourceType = default;
+            this.Amount = default;
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.C2M_EnterVillage)]
+    [ResponseType(nameof(M2C_EnterVillage))]
+    public partial class C2M_EnterVillage : MessageObject, ILocationRequest
+    {
+        public static C2M_EnterVillage Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<C2M_EnterVillage>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.RpcId = default;
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.M2C_EnterVillage)]
+    public partial class M2C_EnterVillage : MessageObject, ILocationResponse
+    {
+        public static M2C_EnterVillage Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<M2C_EnterVillage>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<VillageResourceInfo> ResourceNodes { get; set; } = new();
+
+        [MemoryPackOrder(4)]
+        public List<VillageBuildingInfo> Buildings { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<VillagerInfo> Villagers { get; set; } = new();
+
+        [MemoryPackOrder(6)]
+        public List<VillageResourceStock> Stocks { get; set; } = new();
+
+        [MemoryPackOrder(7)]
+        public int StorageCapacity { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool) return;
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.ResourceNodes.Clear();
+            this.Buildings.Clear();
+            this.Villagers.Clear();
+            this.Stocks.Clear();
+            this.StorageCapacity = default;
+            ObjectPool.Recycle(this);
+        }
     }
 }

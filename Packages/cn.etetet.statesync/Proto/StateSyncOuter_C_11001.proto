@@ -181,3 +181,48 @@ message G2C_Benchmark // ISessionResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// ── 村庄快照 ───────────────────────────────────────────────────
+message VillageResourceInfo
+{
+	int32 ConfigId  = 1;
+	Unity.Mathematics.float3 Position = 2;
+	int32 CurrentAmount = 3;
+}
+
+message VillageBuildingInfo
+{
+	int32 ConfigId  = 1;
+	Unity.Mathematics.float3 Position = 2;
+	int32 State     = 3;
+}
+
+message VillagerInfo
+{
+	Unity.Mathematics.float3 Position      = 1;
+	int32 GatheringResourceType            = 2;
+}
+
+message VillageResourceStock
+{
+	int32 ResourceType = 1;
+	int32 Amount       = 2;
+}
+
+// ResponseType M2C_EnterVillage
+message C2M_EnterVillage // ILocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_EnterVillage // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated VillageResourceInfo  ResourceNodes = 4;
+	repeated VillageBuildingInfo  Buildings     = 5;
+	repeated VillagerInfo         Villagers     = 6;
+	repeated VillageResourceStock Stocks        = 7;
+	int32 StorageCapacity = 8;
+}

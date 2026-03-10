@@ -1,5 +1,6 @@
-﻿namespace ET
+﻿﻿namespace ET
 {
+    [FriendOf(typeof(StorehouseComponent))]
     [EntitySystemOf(typeof(StorehouseComponent))]
     public static partial class StorehouseComponentSystem
     {
@@ -69,6 +70,18 @@
             return self.GetAmount(ResourceType.Wood) >= cfg.CostWood
                 && self.GetAmount(ResourceType.Stone) >= cfg.CostStone
                 && self.GetAmount(ResourceType.Food) >= cfg.CostFood;
+        }
+
+        /// <summary>从服务端快照恢复仓库数据（初始化专用，不触发 ResourceChanged 事件）</summary>
+        public static void RestoreFromSnapshot(this StorehouseComponent self, int resourceType, int amount)
+        {
+            self.Resources[resourceType] = amount;
+        }
+
+        /// <summary>设置仓库容量上限</summary>
+        public static void SetCapacity(this StorehouseComponent self, int capacity)
+        {
+            self.Capacity = capacity;
         }
     }
 }

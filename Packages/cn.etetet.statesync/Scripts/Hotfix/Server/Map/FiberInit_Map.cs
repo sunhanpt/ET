@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿﻿using System.Net;
 
 namespace ET.Server
 {
@@ -17,6 +17,8 @@ namespace ET.Server
             root.AddComponent<AOIManagerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
+            // 村庄数据（服务端权威数据源）
+            root.AddComponent<VillageMapComponent>();
 
             await ETTask.CompletedTask;
         }

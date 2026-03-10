@@ -1,0 +1,95 @@
+﻿using Unity.Mathematics;
+
+namespace ET.Server
+{
+    [EntitySystemOf(typeof(VillageMapComponent))]
+    [FriendOf(typeof(VillageMapComponent))]
+    public static partial class VillageMapComponentSystem
+    {
+        [EntitySystem]
+        private static void Awake(this VillageMapComponent self)
+        {
+            self.ResourceNodes.Clear();
+            self.Buildings.Clear();
+            self.Villagers.Clear();
+            self.Stocks.Clear();
+            self.StorageCapacity = 100;
+
+            // ── 默认初始村庄（可改为从 DB 加载）────────────────
+
+            // 建筑：初始仓库（已建成）
+            self.Buildings.Add(new VillageBuildingData
+            {
+                ConfigId = 1, // Storehouse ConfigId
+                Position = new float3(0, 0, 0),
+                State    = (int)BuildingState.Built,
+            });
+
+            // 资源节点：-1 表示满量，由客户端读 Config.MaxAmount
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 1, Position = new float3(5,  0,  3),  CurrentAmount = -1 }); // Wood
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 1, Position = new float3(7,  0, -2),  CurrentAmount = -1 }); // Wood
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 1, Position = new float3(9,  0,  5),  CurrentAmount = -1 }); // Wood
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 2, Position = new float3(-5, 0,  4),  CurrentAmount = -1 }); // Stone
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 2, Position = new float3(-8, 0, -3),  CurrentAmount = -1 }); // Stone
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 3, Position = new float3(3,  0, -6),  CurrentAmount = -1 }); // Food
+            self.ResourceNodes.Add(new VillageResNodeData { ConfigId = 3, Position = new float3(-3, 0, -7),  CurrentAmount = -1 }); // Food
+
+            // 村民
+            self.Villagers.Add(new VillagerData { Position = new float3(-1,    0,  0),  GatheringResourceType = ResourceType.Wood  });
+            self.Villagers.Add(new VillagerData { Position = new float3(-2,    0,  1),  GatheringResourceType = ResourceType.Wood  });
+            self.Villagers.Add(new VillagerData { Position = new float3(-1.5f, 0, -1),  GatheringResourceType = ResourceType.Stone });
+
+            // 初始仓库存量
+            self.Stocks[ResourceType.Wood]  = 5;
+            self.Stocks[ResourceType.Stone] = 3;
+            self.Stocks[ResourceType.Food]  = 0;
+        }
+
+        [EntitySystem]
+        private static void Destroy(this VillageMapComponent self)
+        {
+        }
+
+        /// <summary>将当前村庄状态打包填入 response</summary>
+        public static void FillSnapshot(this VillageMapComponent self, M2C_EnterVillage response)
+        {
+            response.StorageCapacity = self.StorageCapacity;
+
+            foreach (var r in self.ResourceNodes)
+            {
+                var info = VillageResourceInfo.Create();
+                info.ConfigId      = r.ConfigId;
+                info.Position      = r.Position;
+                info.CurrentAmount = r.CurrentAmount >= 0
+                    ? r.CurrentAmount
+                    : ResourceConfigCategory.Instance.Get(r.ConfigId).MaxAmount;
+                response.ResourceNodes.Add(info);
+            }
+
+            foreach (var b in self.Buildings)
+            {
+                var info = VillageBuildingInfo.Create();
+                info.ConfigId = b.ConfigId;
+                info.Position = b.Position;
+                info.State    = b.State;
+                response.Buildings.Add(info);
+            }
+
+            foreach (var v in self.Villagers)
+            {
+                var info = VillagerInfo.Create();
+                info.Position              = v.Position;
+                info.GatheringResourceType = v.GatheringResourceType;
+                response.Villagers.Add(info);
+            }
+
+            foreach (var kv in self.Stocks)
+            {
+                var stock = VillageResourceStock.Create();
+                stock.ResourceType = kv.Key;
+                stock.Amount       = kv.Value;
+                response.Stocks.Add(stock);
+            }
+        }
+    }
+}
