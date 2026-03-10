@@ -17,7 +17,7 @@ namespace ET.Client
             GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 
             GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
-            GameObject go = Object.Instantiate(prefab, globalComponent.Unit, true);
+            GameObject go = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             go.transform.position = villager.Position;
             villager.AddComponent<GameObjectComponent>().GameObject = go;
             villager.AddComponent<AnimatorComponent>();

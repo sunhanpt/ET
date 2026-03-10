@@ -14,8 +14,6 @@
         public bool IsExhausted => CurrentAmount <= 0;
         /// <summary>当前正在采集此节点的村民Id（同时只允许一个）</summary>
         public long GathererUnitId { get; set; }
-
-        public ResourceConfig Config() => ResourceConfigCategory.Instance.Get(this.ConfigId);
     }
 }
 

@@ -16,7 +16,7 @@ namespace ET.Client
 
             GameObject bundleGo = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(cfg.PrefabPath);
             GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
-            GameObject go = Object.Instantiate(bundleGo, globalComponent.Unit, true);
+            GameObject go = UnityEngine.Object.Instantiate(bundleGo, globalComponent.Unit, true);
             go.transform.position = building.Position;
             building.AddComponent<GameObjectComponent>().GameObject = go;
 

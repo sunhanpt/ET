@@ -13,7 +13,6 @@
         /// <summary>当前工人数量</summary>
         public int CurrentWorkers { get; set; }
 
-        public BuildingConfig Config() => BuildingConfigCategory.Instance.Get(this.ConfigId);
     }
 
     public enum BuildingState

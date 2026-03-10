@@ -45,6 +45,8 @@
             }
             return amount;
         }
+        
+        public static ResourceConfig Config(this ResourceNodeComponent self) => ResourceConfigCategory.Instance.Get(self.ConfigId);
 
         /// <summary>释放占用</summary>
         public static void Release(this ResourceNodeComponent self)

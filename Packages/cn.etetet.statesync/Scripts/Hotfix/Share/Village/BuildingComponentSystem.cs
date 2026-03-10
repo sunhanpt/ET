@@ -1,5 +1,6 @@
 ﻿namespace ET
 {
+    [FriendOf(typeof(StorehouseComponent))]
     [EntitySystemOf(typeof(BuildingComponent))]
     public static partial class BuildingComponentSystem
     {
@@ -15,6 +16,9 @@
         private static void Destroy(this BuildingComponent self)
         {
         }
+        
+        
+        public static BuildingConfig Config(this BuildingComponent self) => BuildingConfigCategory.Instance.Get(self.ConfigId);
 
         public static bool IsBuilt(this BuildingComponent self) => self.State == BuildingState.Built;
 
