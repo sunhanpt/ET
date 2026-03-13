@@ -1,6 +1,5 @@
 {"dict": [
 [1001, {"_t":"BuildingConfig","_id":1001,"BuildingType":5001,"Name":"米克尔","MaxWorkers":1,"CostWood":178,"CostStone":68,"CostFood":0,"BuildTime":0,"PrefabPath":"68","StorageCapacity":68}],
 [1002, {"_t":"BuildingConfig","_id":1002,"BuildingType":5001,"Name":"米克尔2","MaxWorkers":2,"CostWood":278,"CostStone":78,"CostFood":0,"BuildTime":0,"PrefabPath":"78","StorageCapacity":78}],
-[1003, {"_t":"BuildingConfig","_id":1003,"BuildingType":5001,"Name":"米克尔3","MaxWorkers":1,"CostWood":178,"CostStone":68,"CostFood":0,"BuildTime":0,"PrefabPath":"68","StorageCapacity":68}],
 [1004, {"_t":"BuildingConfig","_id":1004,"BuildingType":5001,"Name":"米克尔4","MaxWorkers":2,"CostWood":278,"CostStone":78,"CostFood":0,"BuildTime":0,"PrefabPath":"78","StorageCapacity":78}],
 ]}

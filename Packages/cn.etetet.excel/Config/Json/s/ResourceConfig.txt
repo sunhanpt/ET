@@ -2,5 +2,4 @@
 [1001, {"_t":"ResourceConfig","_id":1001,"ResourceType":5001,"Name":"米克尔","GatherTime":1,"GatherAmount":178,"MaxAmount":68,"PrefabPath":"","GatherMotion":"","WalkToOffset":68}],
 [1002, {"_t":"ResourceConfig","_id":1002,"ResourceType":5001,"Name":"米克尔2","GatherTime":2,"GatherAmount":278,"MaxAmount":78,"PrefabPath":"","GatherMotion":"","WalkToOffset":78}],
 [1003, {"_t":"ResourceConfig","_id":1003,"ResourceType":5001,"Name":"米克尔3","GatherTime":1,"GatherAmount":178,"MaxAmount":68,"PrefabPath":"","GatherMotion":"","WalkToOffset":68}],
-[1004, {"_t":"ResourceConfig","_id":1004,"ResourceType":5001,"Name":"米克尔4","GatherTime":2,"GatherAmount":278,"MaxAmount":78,"PrefabPath":"","GatherMotion":"","WalkToOffset":78}],
 ]}

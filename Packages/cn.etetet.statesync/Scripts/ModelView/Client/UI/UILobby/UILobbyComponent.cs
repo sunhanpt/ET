@@ -8,8 +8,8 @@ namespace ET.Client
 	public class UILobbyComponent : Entity, IAwake
 	{
 		public GameObject continueGame;
-		public GameObject newGame;
-		public GameObject quitGame;
+		public GameObject NewGame;
+		public GameObject QuitGame;
 		public Text text;
 	}
 }
