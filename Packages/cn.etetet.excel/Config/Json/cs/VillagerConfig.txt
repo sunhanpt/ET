@@ -1,0 +1,3 @@
+{"dict": [
+[1001, {"_t":"VillagerConfig","_id":1001,"Name":"Villager","Level":1,"PrefabPath":"68"}],
+]}

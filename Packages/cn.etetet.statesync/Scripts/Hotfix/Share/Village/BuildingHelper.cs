@@ -38,7 +38,6 @@ namespace ET
             Unit building = unitComponent.AddChild<Unit, int>(buildingConfigId);
             building.Position = position;
             building.AddComponent<BuildingComponent, int>(buildingConfigId);
-            unitComponent.Add(building);
             village.AddBuilding(building.Id);
 
             EventSystem.Instance.Publish(scene, new AfterBuildingCreate() { BuildingUnit = building });
@@ -62,7 +61,6 @@ namespace ET
             Unit building = unitComponent.AddChild<Unit, int>(buildingConfigId);
             building.Position = position;
             BuildingComponent bc = building.AddComponent<BuildingComponent, int>(buildingConfigId);
-            unitComponent.Add(building);
             village.AddBuilding(building.Id);
 
             // 直接应用服务端状态

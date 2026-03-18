@@ -12,7 +12,6 @@ namespace ET.Server
             Unit unit = MongoHelper.Deserialize<Unit>(request.Unit);
 
             unitComponent.AddChild(unit);
-            unitComponent.Add(unit);
 
             foreach (byte[] bytes in request.Entitys)
             {
@@ -20,8 +19,8 @@ namespace ET.Server
                 unit.AddComponent(entity);
             }
 
-            unit.AddComponent<MoveComponent>();
-            unit.AddComponent<PathfindingComponent, string>(scene.Name);
+            // unit.AddComponent<MoveComponent>();
+            // unit.AddComponent<PathfindingComponent, string>(scene.Name);
             unit.Position = new float3(-10, 0, -10);
 
             unit.AddComponent<MailBoxComponent, int>(MailBoxType.OrderedMessage);

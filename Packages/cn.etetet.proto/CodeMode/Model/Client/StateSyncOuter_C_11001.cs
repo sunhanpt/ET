@@ -831,43 +831,7 @@ namespace ET
         }
     }
 
-    public static class StateSyncOuter
-    {
-        public const ushort RouterSync = 11002;
-        public const ushort C2M_TestRequest = 11003;
-        public const ushort M2C_TestResponse = 11004;
-        public const ushort C2G_EnterMap = 11005;
-        public const ushort G2C_EnterMap = 11006;
-        public const ushort MoveInfo = 11007;
-        public const ushort UnitInfo = 11008;
-        public const ushort M2C_CreateUnits = 11009;
-        public const ushort M2C_CreateMyUnit = 11010;
-        public const ushort M2C_StartSceneChange = 11011;
-        public const ushort M2C_RemoveUnits = 11012;
-        public const ushort C2M_PathfindingResult = 11013;
-        public const ushort C2M_Stop = 11014;
-        public const ushort M2C_PathfindingResult = 11015;
-        public const ushort M2C_Stop = 11016;
-        public const ushort G2C_Test = 11017;
-        public const ushort C2M_Reload = 11018;
-        public const ushort M2C_Reload = 11019;
-        public const ushort G2C_TestHotfixMessage = 11020;
-        public const ushort C2M_TestRobotCase = 11021;
-        public const ushort M2C_TestRobotCase = 11022;
-        public const ushort C2M_TestRobotCase2 = 11023;
-        public const ushort M2C_TestRobotCase2 = 11024;
-        public const ushort C2M_TransferMap = 11025;
-        public const ushort M2C_TransferMap = 11026;
-        public const ushort C2G_Benchmark = 11027;
-        public const ushort G2C_Benchmark = 11028;
-        public const ushort VillageResourceInfo = 11029;
-        public const ushort VillageBuildingInfo = 11030;
-        public const ushort VillagerInfo = 11031;
-        public const ushort VillageResourceStock = 11032;
-        public const ushort C2M_EnterVillage = 11033;
-        public const ushort M2C_EnterVillage = 11034;
-    }
-
+    // ── 村庄快照 ───────────────────────────────────────────────────
     [MemoryPackable]
     [Message(StateSyncOuter.VillageResourceInfo)]
     public partial class VillageResourceInfo : MessageObject
@@ -888,10 +852,15 @@ namespace ET
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
             this.ConfigId = default;
             this.Position = default;
             this.CurrentAmount = default;
+
             ObjectPool.Recycle(this);
         }
     }
@@ -916,10 +885,15 @@ namespace ET
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
             this.ConfigId = default;
             this.Position = default;
             this.State = default;
+
             ObjectPool.Recycle(this);
         }
     }
@@ -934,16 +908,25 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public Unity.Mathematics.float3 Position { get; set; }
+        public int ConfigId { get; set; }
 
         [MemoryPackOrder(1)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(2)]
         public int GatheringResourceType { get; set; }
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.ConfigId = default;
             this.Position = default;
             this.GatheringResourceType = default;
+
             ObjectPool.Recycle(this);
         }
     }
@@ -965,9 +948,14 @@ namespace ET
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
             this.ResourceType = default;
             this.Amount = default;
+
             ObjectPool.Recycle(this);
         }
     }
@@ -987,8 +975,13 @@ namespace ET
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
             this.RpcId = default;
+
             ObjectPool.Recycle(this);
         }
     }
@@ -1028,7 +1021,11 @@ namespace ET
 
         public override void Dispose()
         {
-            if (!this.IsFromPool) return;
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
             this.RpcId = default;
             this.Error = default;
             this.Message = default;
@@ -1037,7 +1034,45 @@ namespace ET
             this.Villagers.Clear();
             this.Stocks.Clear();
             this.StorageCapacity = default;
+
             ObjectPool.Recycle(this);
         }
+    }
+
+    public static class StateSyncOuter
+    {
+        public const ushort RouterSync = 11002;
+        public const ushort C2M_TestRequest = 11003;
+        public const ushort M2C_TestResponse = 11004;
+        public const ushort C2G_EnterMap = 11005;
+        public const ushort G2C_EnterMap = 11006;
+        public const ushort MoveInfo = 11007;
+        public const ushort UnitInfo = 11008;
+        public const ushort M2C_CreateUnits = 11009;
+        public const ushort M2C_CreateMyUnit = 11010;
+        public const ushort M2C_StartSceneChange = 11011;
+        public const ushort M2C_RemoveUnits = 11012;
+        public const ushort C2M_PathfindingResult = 11013;
+        public const ushort C2M_Stop = 11014;
+        public const ushort M2C_PathfindingResult = 11015;
+        public const ushort M2C_Stop = 11016;
+        public const ushort G2C_Test = 11017;
+        public const ushort C2M_Reload = 11018;
+        public const ushort M2C_Reload = 11019;
+        public const ushort G2C_TestHotfixMessage = 11020;
+        public const ushort C2M_TestRobotCase = 11021;
+        public const ushort M2C_TestRobotCase = 11022;
+        public const ushort C2M_TestRobotCase2 = 11023;
+        public const ushort M2C_TestRobotCase2 = 11024;
+        public const ushort C2M_TransferMap = 11025;
+        public const ushort M2C_TransferMap = 11026;
+        public const ushort C2G_Benchmark = 11027;
+        public const ushort G2C_Benchmark = 11028;
+        public const ushort VillageResourceInfo = 11029;
+        public const ushort VillageBuildingInfo = 11030;
+        public const ushort VillagerInfo = 11031;
+        public const ushort VillageResourceStock = 11032;
+        public const ushort C2M_EnterVillage = 11033;
+        public const ushort M2C_EnterVillage = 11034;
     }
 }

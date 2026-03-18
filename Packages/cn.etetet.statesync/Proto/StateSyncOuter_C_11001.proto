@@ -199,8 +199,9 @@ message VillageBuildingInfo
 
 message VillagerInfo
 {
-	Unity.Mathematics.float3 Position      = 1;
-	int32 GatheringResourceType            = 2;
+	int32 ConfigId  = 1;
+	Unity.Mathematics.float3 Position      = 2;
+	int32 GatheringResourceType            = 3;
 }
 
 message VillageResourceStock

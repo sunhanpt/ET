@@ -11,8 +11,10 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, AfterVillagerCreate args)
         {
             Unit villager = args.VillagerUnit;
-            // 村民使用与普通Unit相同的prefab路径，可按需改为独立配置
-            string assetsName = "Packages/cn.etetet.demores/Bundles/Unit/Unit.prefab";
+            var villagerComponent = villager.GetComponent<VillagerComponent>();
+            var config = villagerComponent.ConfigId;
+            var villagerConfig = VillagerConfigCategory.Instance.Get(config);
+            string assetsName = villagerConfig.PrefabPath;
             GameObject bundleGameObject = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
             GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 

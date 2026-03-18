@@ -7,12 +7,13 @@ namespace ET
     public static partial class VillagerComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this VillagerComponent self)
+        private static void Awake(this VillagerComponent self, int configId)
         {
             self.State = VillagerState.Idle;
             self.TargetResourceUnitId = 0;
             self.CarryResourceType = 0;
             self.CarryAmount = 0;
+            self.ConfigId = configId;
         }
 
         [EntitySystem]

@@ -5,12 +5,12 @@ namespace ET
     public static class VillageFactory
     {
         /// <summary>创建村民 Unit</summary>
-        public static Unit CreateVillager(Scene scene, float3 position)
+        public static Unit CreateVillager(Scene scene, int villagerConfId, float3 position)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             VillageComponent village    = scene.GetComponent<VillageComponent>();
 
-            Unit villager = unitComponent.AddChild<Unit, int>(2001);
+            Unit villager = unitComponent.AddChild<Unit, int>(villagerConfId);
             villager.Position = position;
 
             NumericComponent numeric = villager.AddComponent<NumericComponent>();
@@ -20,9 +20,8 @@ namespace ET
 
             villager.AddComponent<MoveComponent>();
             villager.AddComponent<ObjectWait>();
-            villager.AddComponent<VillagerComponent>();
-
-            unitComponent.Add(villager);
+            villager.AddComponent<VillagerComponent,int>(villagerConfId);
+            
             village.AddVillager(villager.Id);
 
             EventSystem.Instance.Publish(scene, new AfterVillagerCreate() { VillagerUnit = villager });
@@ -43,8 +42,7 @@ namespace ET
             {
                 resComp.CurrentAmount = currentAmount;
             }
-
-            unitComponent.Add(node);
+            
             village.AddResourceNode(node.Id);
 
             EventSystem.Instance.Publish(scene, new AfterResourceNodeCreate() { NodeUnit = node });
