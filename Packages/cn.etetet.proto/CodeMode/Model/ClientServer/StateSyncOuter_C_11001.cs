@@ -144,10 +144,10 @@ namespace ET
         public string Message { get; set; }
 
         /// <summary>
-        /// 自己的UnitId
+        /// 自己的PlayerId
         /// </summary>
         [MemoryPackOrder(3)]
-        public long MyId { get; set; }
+        public long PlayerId { get; set; }
 
         public override void Dispose()
         {
@@ -159,7 +159,7 @@ namespace ET
             this.RpcId = default;
             this.Error = default;
             this.Message = default;
-            this.MyId = default;
+            this.PlayerId = default;
 
             ObjectPool.Recycle(this);
         }

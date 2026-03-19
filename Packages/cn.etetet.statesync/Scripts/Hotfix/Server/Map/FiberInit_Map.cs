@@ -1,4 +1,4 @@
-﻿﻿using System.Net;
+﻿﻿﻿using System.Net;
 
 namespace ET.Server
 {
@@ -13,10 +13,8 @@ namespace ET.Server
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
-            root.AddComponent<UnitComponent>();
-            root.AddComponent<AOIManagerComponent>();
-            root.AddComponent<LocationProxyComponent>();
-            root.AddComponent<MessageLocationSenderComponent>();
+            // 模拟经营：玩家会话映射（无 Unit，通过 GateSession 转发消息）
+            root.AddComponent<PlayerSessionMapComponent>();
             // 村庄数据（服务端权威数据源）
             root.AddComponent<VillageMapComponent>();
 

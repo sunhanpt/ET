@@ -16,18 +16,43 @@ message A2M_Reload // IResponse
 }
 
 
-// ResponseType M2M_UnitTransferResponse
-message M2M_UnitTransferRequest // IRequest
+// ResponseType G2M_PlayerEnterResponse
+message G2M_PlayerEnter // IRequest
 {
 	int32 RpcId = 1;
-	ActorId OldActorId = 2;
-	bytes Unit = 3;
-	repeated bytes Entitys = 4;
+	int64 PlayerId = 2;
+	ActorId GateSessionActorId = 3;
 }
 
-message M2M_UnitTransferResponse // IResponse
+message G2M_PlayerEnterResponse // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
 }
+
+message G2M_PlayerLeave // IMessage
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+// ResponseType G2M_GetVillageSnapshotResponse
+message G2M_GetVillageSnapshot // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message G2M_GetVillageSnapshotResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated VillageResourceInfo  ResourceNodes = 4;
+	repeated VillageBuildingInfo  Buildings     = 5;
+	repeated VillagerInfo         Villagers     = 6;
+	repeated VillageResourceStock Stocks        = 7;
+	int32 StorageCapacity = 8;
+}
+

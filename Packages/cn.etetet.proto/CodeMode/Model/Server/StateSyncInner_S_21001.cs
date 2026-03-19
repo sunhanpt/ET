@@ -63,26 +63,23 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(StateSyncInner.M2M_UnitTransferRequest)]
-    [ResponseType(nameof(M2M_UnitTransferResponse))]
-    public partial class M2M_UnitTransferRequest : MessageObject, IRequest
+    [Message(StateSyncInner.G2M_PlayerEnter)]
+    [ResponseType(nameof(G2M_PlayerEnterResponse))]
+    public partial class G2M_PlayerEnter : MessageObject, IRequest
     {
-        public static M2M_UnitTransferRequest Create(bool isFromPool = false)
+        public static G2M_PlayerEnter Create(bool isFromPool = false)
         {
-            return ObjectPool.Fetch<M2M_UnitTransferRequest>(isFromPool);
+            return ObjectPool.Fetch<G2M_PlayerEnter>(isFromPool);
         }
 
         [MemoryPackOrder(0)]
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public ActorId OldActorId { get; set; }
+        public long PlayerId { get; set; }
 
         [MemoryPackOrder(2)]
-        public byte[] Unit { get; set; }
-
-        [MemoryPackOrder(3)]
-        public List<byte[]> Entitys { get; set; } = new();
+        public ActorId GateSessionActorId { get; set; }
 
         public override void Dispose()
         {
@@ -92,21 +89,20 @@ namespace ET
             }
 
             this.RpcId = default;
-            this.OldActorId = default;
-            this.Unit = default;
-            this.Entitys.Clear();
+            this.PlayerId = default;
+            this.GateSessionActorId = default;
 
             ObjectPool.Recycle(this);
         }
     }
 
     [MemoryPackable]
-    [Message(StateSyncInner.M2M_UnitTransferResponse)]
-    public partial class M2M_UnitTransferResponse : MessageObject, IResponse
+    [Message(StateSyncInner.G2M_PlayerEnterResponse)]
+    public partial class G2M_PlayerEnterResponse : MessageObject, IResponse
     {
-        public static M2M_UnitTransferResponse Create(bool isFromPool = false)
+        public static G2M_PlayerEnterResponse Create(bool isFromPool = false)
         {
-            return ObjectPool.Fetch<M2M_UnitTransferResponse>(isFromPool);
+            return ObjectPool.Fetch<G2M_PlayerEnterResponse>(isFromPool);
         }
 
         [MemoryPackOrder(0)]
@@ -133,11 +129,126 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(StateSyncInner.G2M_PlayerLeave)]
+    public partial class G2M_PlayerLeave : MessageObject
+    {
+        public static G2M_PlayerLeave Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<G2M_PlayerLeave>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncInner.G2M_GetVillageSnapshot)]
+    [ResponseType(nameof(G2M_GetVillageSnapshotResponse))]
+    public partial class G2M_GetVillageSnapshot : MessageObject, IRequest
+    {
+        public static G2M_GetVillageSnapshot Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<G2M_GetVillageSnapshot>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncInner.G2M_GetVillageSnapshotResponse)]
+    public partial class G2M_GetVillageSnapshotResponse : MessageObject, IResponse
+    {
+        public static G2M_GetVillageSnapshotResponse Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<G2M_GetVillageSnapshotResponse>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<VillageResourceInfo> ResourceNodes { get; set; } = new();
+
+        [MemoryPackOrder(4)]
+        public List<VillageBuildingInfo> Buildings { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<VillagerInfo> Villagers { get; set; } = new();
+
+        [MemoryPackOrder(6)]
+        public List<VillageResourceStock> Stocks { get; set; } = new();
+
+        [MemoryPackOrder(7)]
+        public int StorageCapacity { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.ResourceNodes.Clear();
+            this.Buildings.Clear();
+            this.Villagers.Clear();
+            this.Stocks.Clear();
+            this.StorageCapacity = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
     public static class StateSyncInner
     {
         public const ushort M2A_Reload = 21002;
         public const ushort A2M_Reload = 21003;
-        public const ushort M2M_UnitTransferRequest = 21004;
-        public const ushort M2M_UnitTransferResponse = 21005;
+        public const ushort G2M_PlayerEnter = 21004;
+        public const ushort G2M_PlayerEnterResponse = 21005;
+        public const ushort G2M_PlayerLeave = 21006;
+        public const ushort G2M_GetVillageSnapshot = 21007;
+        public const ushort G2M_GetVillageSnapshotResponse = 21008;
     }
 }

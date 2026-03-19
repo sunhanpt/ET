@@ -1,4 +1,4 @@
-﻿using Unity.Mathematics;
+﻿﻿using Unity.Mathematics;
 
 namespace ET.Server
 {
@@ -46,15 +46,24 @@ namespace ET.Server
         }
 
         [EntitySystem]
-        private static void Destroy(this VillageMapComponent self)
+        private static void Destroy(this VillageMapComponent _)
         {
         }
 
-        /// <summary>将当前村庄状态打包填入 response</summary>
+        /// <summary>将当前村庄状态打包填入 M2C_EnterVillage</summary>
         public static void FillSnapshot(this VillageMapComponent self, M2C_EnterVillage response)
         {
             response.StorageCapacity = self.StorageCapacity;
+            FillSnapshotCore(self, response.ResourceNodes, response.Buildings, response.Villagers, response.Stocks);
+        }
 
+        private static void FillSnapshotCore(
+            VillageMapComponent self,
+            System.Collections.Generic.List<VillageResourceInfo>  resourceNodes,
+            System.Collections.Generic.List<VillageBuildingInfo>  buildings,
+            System.Collections.Generic.List<VillagerInfo>         villagers,
+            System.Collections.Generic.List<VillageResourceStock> stocks)
+        {
             foreach (var r in self.ResourceNodes)
             {
                 var info = VillageResourceInfo.Create();
@@ -63,7 +72,7 @@ namespace ET.Server
                 info.CurrentAmount = r.CurrentAmount >= 0
                     ? r.CurrentAmount
                     : ResourceConfigCategory.Instance.Get(r.ConfigId).MaxAmount;
-                response.ResourceNodes.Add(info);
+                resourceNodes.Add(info);
             }
 
             foreach (var b in self.Buildings)
@@ -72,7 +81,7 @@ namespace ET.Server
                 info.ConfigId = b.ConfigId;
                 info.Position = b.Position;
                 info.State    = b.State;
-                response.Buildings.Add(info);
+                buildings.Add(info);
             }
 
             foreach (var v in self.Villagers)
@@ -80,7 +89,7 @@ namespace ET.Server
                 var info = VillagerInfo.Create();
                 info.Position              = v.Position;
                 info.GatheringResourceType = v.GatheringResourceType;
-                response.Villagers.Add(info);
+                villagers.Add(info);
             }
 
             foreach (var kv in self.Stocks)
@@ -88,7 +97,7 @@ namespace ET.Server
                 var stock = VillageResourceStock.Create();
                 stock.ResourceType = kv.Key;
                 stock.Amount       = kv.Value;
-                response.Stocks.Add(stock);
+                stocks.Add(stock);
             }
         }
     }

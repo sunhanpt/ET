@@ -7,19 +7,20 @@
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 
-			// 在Gate上动态创建一个Map Scene，把Unit从DB中加载放进来，然后传送到真正的Map中，这样登陆跟传送的逻辑就完全一样了
-			GateMapComponent gateMapComponent = player.AddComponent<GateMapComponent>();
-			gateMapComponent.Scene = await GateMapFactory.Create(gateMapComponent, player.Id, IdGenerater.Instance.GenerateInstanceId(), "GateMap");
-
-			Scene scene = gateMapComponent.Scene;
-			// 这里可以从DB中加载Unit
-			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player);
-			
+			// 模拟经营：无需 Unit/GateMap，直接通知 MapServer 玩家进入
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Village");
-			response.MyId = player.Id;
 
-			// 等到一帧的最后面再传送，先让G2C_EnterMap返回，否则传送消息可能比G2C_EnterMap还早
-			TransferHelper.TransferAtFrameFinish(unit, startSceneConfig.ActorId, startSceneConfig.Name).NoContext();
+			// PlayerSessionComponent 自身挂有 MailBoxComponent(GateSession)，是消息路由到客户端的 Actor
+			PlayerSessionComponent playerSessionComponent = player.GetComponent<PlayerSessionComponent>();
+
+			G2M_PlayerEnter enterMsg = G2M_PlayerEnter.Create();
+			enterMsg.PlayerId           = player.Id;
+			enterMsg.GateSessionActorId = playerSessionComponent.GetActorId();
+
+			await session.Fiber().Root.GetComponent<MessageSender>().Call(startSceneConfig.ActorId, enterMsg);
+
+			response.PlayerId = player.Id;
 		}
 	}
 }
+

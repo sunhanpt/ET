@@ -1,13 +1,3 @@
-﻿
+﻿// 模拟经营改造：Unit Location 路由已移除，断线逻辑改用 G2M_PlayerLeaveHandler
+// namespace ET.Server { ... }
 
-namespace ET.Server
-{
-	[MessageHandler(SceneType.Map)]
-	public class G2M_SessionDisconnectHandler : MessageLocationHandler<Unit, G2M_SessionDisconnect>
-	{
-		protected override async ETTask Run(Unit unit, G2M_SessionDisconnect message)
-		{
-			await ETTask.CompletedTask;
-		}
-	}
-}
