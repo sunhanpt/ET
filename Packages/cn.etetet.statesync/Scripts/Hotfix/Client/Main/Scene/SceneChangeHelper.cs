@@ -7,7 +7,8 @@
         {
             CurrentScenesComponent currentScenesComponent = root.GetComponent<CurrentScenesComponent>();
             currentScenesComponent.Scene?.Dispose(); // 删除之前的CurrentScene，创建新的
-            Scene currentScene = SceneFactory.Create(sceneInstanceId, sceneName, SceneType.StateSync, currentScenesComponent);
+            Scene currentScene = SceneFactory.Create(sceneInstanceId, sceneName, SceneType.Village, currentScenesComponent);
+            currentScenesComponent.Scene = currentScene;
             // 等待场景资源加载完成（SceneChangeStart 订阅者内有异步加载逻辑）
             await EventSystem.Instance.PublishAsync(root, new SceneChangeStart());
             // 场景加载完毕，通知订阅者

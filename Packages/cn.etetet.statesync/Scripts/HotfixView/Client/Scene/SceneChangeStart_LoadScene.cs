@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace ET.Client
 {
-    [Event(SceneType.StateSync)]
+    [Event(SceneType.Village)]
     public class SceneChangeStart_LoadScene: AEvent<Scene, SceneChangeStart>
     {
         protected override async ETTask Run(Scene root, SceneChangeStart args)
@@ -12,7 +12,7 @@ namespace ET.Client
             {
                 Scene currentScene = root.CurrentScene();
 
-                ResourcesLoaderComponent resourcesLoaderComponent = currentScene.GetComponent<ResourcesLoaderComponent>();
+                ResourcesLoaderComponent resourcesLoaderComponent = root.GetComponent<ResourcesLoaderComponent>();
             
                 // 加载场景资源
                 await resourcesLoaderComponent.LoadSceneAsync($"Packages/cn.etetet.demores/Scenes/{currentScene.Name}.unity", LoadSceneMode.Single);

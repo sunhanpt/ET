@@ -7,8 +7,8 @@
         public const int Robot = PackageType.StateSync * 1000 + 3;
 
         // 客户端
-        public const int StateSync = PackageType.StateSync * 1000 + 20;
+        public const int Village = PackageType.StateSync * 1000 + 20;
         public const int Current = PackageType.StateSync * 1000 + 21;
-        public const int StateSyncView = PackageType.StateSync * 1000 + 24;
+        public const int VillageView = PackageType.StateSync * 1000 + 24;
     }
 }

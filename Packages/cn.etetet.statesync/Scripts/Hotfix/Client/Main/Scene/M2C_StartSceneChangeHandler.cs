@@ -1,6 +1,6 @@
 ﻿namespace ET.Client
 {
-	[MessageHandler(SceneType.StateSync)]
+	[MessageHandler(SceneType.Village)]
 	public class M2C_StartSceneChangeHandler : MessageHandler<Scene, M2C_StartSceneChange>
 	{
 		protected override async ETTask Run(Scene root, M2C_StartSceneChange message)
