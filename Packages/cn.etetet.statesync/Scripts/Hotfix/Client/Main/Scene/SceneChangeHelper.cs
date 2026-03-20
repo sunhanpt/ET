@@ -7,14 +7,13 @@
         {
             CurrentScenesComponent currentScenesComponent = root.GetComponent<CurrentScenesComponent>();
             currentScenesComponent.Scene?.Dispose(); // 删除之前的CurrentScene，创建新的
-            Scene currentScene = CurrentSceneFactory.Create(sceneInstanceId, sceneName, currentScenesComponent);
-            // 可以订阅这个事件中创建Loading界面
-            EventSystem.Instance.Publish(root, new SceneChangeStart());
-            // 等待 SceneChangeStart 事件订阅者（如加载场景资源）完成后通知完成
+            Scene currentScene = SceneFactory.Create(sceneInstanceId, sceneName, SceneType.StateSync, currentScenesComponent);
+            // 等待场景资源加载完成（SceneChangeStart 订阅者内有异步加载逻辑）
+            await EventSystem.Instance.PublishAsync(root, new SceneChangeStart());
+            // 场景加载完毕，通知订阅者
             EventSystem.Instance.Publish(currentScene, new SceneChangeFinish());
             // 通知等待场景切换的协程
             root.GetComponent<ObjectWait>().Notify(new Wait_SceneChangeFinish());
-            await ETTask.CompletedTask;
         }
     }
 }

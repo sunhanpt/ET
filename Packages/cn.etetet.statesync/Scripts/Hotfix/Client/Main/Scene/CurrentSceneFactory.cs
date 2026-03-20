@@ -1,10 +1,10 @@
 namespace ET.Client
 {
-    public static class CurrentSceneFactory
+    public static class SceneFactory
     {
-        public static Scene Create(long id, string name, CurrentScenesComponent currentScenesComponent)
+        public static Scene Create(long id, string name, int sceneType, CurrentScenesComponent currentScenesComponent)
         {
-            Scene currentScene = EntitySceneFactory.CreateScene(currentScenesComponent, id, IdGenerater.Instance.GenerateInstanceId(), SceneType.Current, name);
+            Scene currentScene = EntitySceneFactory.CreateScene(currentScenesComponent, id, IdGenerater.Instance.GenerateInstanceId(), sceneType, name);
             currentScenesComponent.Scene = currentScene;
             
             EventSystem.Instance.Publish(currentScene, new AfterCreateCurrentScene());
