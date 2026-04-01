@@ -31,13 +31,20 @@
       "dependencies": {}
     },
     "cn.etetet.demores": {
-      "version": "file:cn.etetet.gameres",
+      "version": "3.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://npm.pkg.github.com/@ET-Packages"
+    },
+    "cn.etetet.excel": {
+      "version": "file:cn.etetet.excel",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
     },
-    "cn.etetet.excel": {
-      "version": "file:cn.etetet.excel",
+    "cn.etetet.gameres": {
+      "version": "file:cn.etetet.gameres",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
