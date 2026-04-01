@@ -19,7 +19,7 @@ namespace ET
         public static readonly string[] DllNames = { "ET.Hotfix", "ET.HotfixView", "ET.Model", "ET.ModelView" };
 
         [InitializeOnLoadMethod]
-        static void Initialize()
+        static void Initialize() 
         {
             unitySynchronizationContext = SynchronizationContext.Current;
         }
@@ -51,7 +51,7 @@ namespace ET
         /// <summary>
         /// 执行编译代码流程
         /// </summary>
-        public static void DoCompile()
+        public static void DoCompile() 
         {
             // 强制刷新一下，防止关闭auto refresh，编译出老代码
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);

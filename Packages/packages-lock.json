@@ -31,7 +31,7 @@
       "dependencies": {}
     },
     "cn.etetet.demores": {
-      "version": "file:cn.etetet.demores",
+      "version": "file:cn.etetet.gameres",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

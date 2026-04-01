@@ -1,0 +1,30 @@
+Assets/GameRes/
+├─ BuildIn/
+│  ├─ Boot/
+│  ├─ BaseUI/
+│  └─ Config/
+├─ Shared/
+│  ├─ UICommon/
+│  ├─ Shader/
+│  ├─ VFXBase/
+│  ├─ CharacterBase/
+│  └─ AudioCommon/
+├─ HotUpdate/
+│  ├─ System/
+│  │  ├─ Login/
+│  │  ├─ Lobby/
+│  │  ├─ Shop/
+│  │  ├─ Bag/
+│  │  └─ Mail/
+│  ├─ Gameplay/
+│  │  ├─ Battle/
+│  │  ├─ Dungeon/
+│  │  └─ PVP/
+│  ├─ Character/
+│  │  ├─ Hero_1001/
+│  │  ├─ Hero_1002/
+│  │  └─ Monster_2001/
+│  └─ Activity/
+│     ├─ Act_202604_QingMing/
+│     └─ Act_202605_MayDay/
+└─ Raw/
