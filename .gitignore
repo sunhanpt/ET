@@ -54,3 +54,5 @@ Unity.sln.DotSettings.user
 /ET.sln
 Assets/Plugins/Sirenix*
 Assets/HybridCLR*
+
+!/Packages/cn.etetet.gameres/Bundles/
