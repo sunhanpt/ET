@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 namespace ET.Client
 {
     /// <summary>
     /// 村民 Unit 创建后加载 prefab 并挂载动画组件
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class AfterVillagerCreate_CreateView : AEvent<Scene, AfterVillagerCreate>
     {
         protected override async ETTask Run(Scene scene, AfterVillagerCreate args)

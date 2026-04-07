@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 namespace ET.Client
 {
     /// <summary>
     /// 资源节点创建后，加载并实例化对应 prefab
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class AfterResourceNodeCreate_CreateView : AEvent<Scene, AfterResourceNodeCreate>
     {
         protected override async ETTask Run(Scene scene, AfterResourceNodeCreate args)
@@ -25,7 +25,7 @@ namespace ET.Client
     /// <summary>
     /// 资源节点耗尽后隐藏 GameObject
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class ResourceNodeExhausted_HideView : AEvent<Scene, ResourceNodeExhausted>
     {
         protected override async ETTask Run(Scene scene, ResourceNodeExhausted args)

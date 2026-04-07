@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class ChangePosition_SyncGameObjectPos: AEvent<Scene, ChangePosition>
     {
         protected override async ETTask Run(Scene scene, ChangePosition args)

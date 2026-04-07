@@ -5,7 +5,7 @@ namespace ET.Client
     /// <summary>
     /// 建筑 Unit 创建后加载 prefab（建造中状态）
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class AfterBuildingCreate_CreateView : AEvent<Scene, AfterBuildingCreate>
     {
         protected override async ETTask Run(Scene scene, AfterBuildingCreate args)
@@ -28,7 +28,7 @@ namespace ET.Client
     /// <summary>
     /// 建筑完成后恢复正常显示
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class BuildingFinished_UpdateView : AEvent<Scene, BuildingFinished>
     {
         protected override async ETTask Run(Scene scene, BuildingFinished args)
@@ -49,4 +49,3 @@ namespace ET.Client
         }
     }
 }
-

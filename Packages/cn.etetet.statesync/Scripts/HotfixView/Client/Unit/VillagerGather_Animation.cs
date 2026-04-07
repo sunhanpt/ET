@@ -1,9 +1,9 @@
-﻿namespace ET.Client
+﻿﻿namespace ET.Client
 {
     /// <summary>
     /// 监听 VillagerGatherStart 事件，切换村民采集动画
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class VillagerGatherStart_PlayAnimation : AEvent<Scene, VillagerGatherStart>
     {
         protected override async ETTask Run(Scene scene, VillagerGatherStart args)
@@ -37,7 +37,7 @@
     /// <summary>
     /// 监听 VillagerGatherStop 事件，停止采集动画回到 Idle
     /// </summary>
-    [Event(SceneType.Current)]
+    [Event(SceneType.Village)]
     public class VillagerGatherStop_StopAnimation : AEvent<Scene, VillagerGatherStop>
     {
         protected override async ETTask Run(Scene scene, VillagerGatherStop args)
