@@ -32,5 +32,11 @@
     {
         public long BuildingUnitId;
     }
+
+    /// <summary>资源节点已复活（重置储量，可再次采集）</summary>
+    public struct ResourceNodeRespawned
+    {
+        public long NodeUnitId;
+    }
 }
 

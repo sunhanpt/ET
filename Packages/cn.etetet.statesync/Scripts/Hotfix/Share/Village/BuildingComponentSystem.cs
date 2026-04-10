@@ -42,6 +42,8 @@
         {
             self.State = BuildingState.Built;
             EventSystem.Instance.Publish(self.Scene(), new BuildingFinished() { BuildingUnitId = self.GetParent<Unit>().Id });
+            // House 建成 → 增加人口上限
+            self.ApplyHouseBonus();
         }
 
         /// <summary>
@@ -53,6 +55,16 @@
             var storehouse = self.Scene().GetComponent<StorehouseComponent>();
             if (storehouse != null)
                 storehouse.Capacity += self.Config().StorageCapacity;
+        }
+
+        /// <summary>
+        /// 增加人口上限（仅 House 类建筑）
+        /// </summary>
+        public static void ApplyHouseBonus(this BuildingComponent self)
+        {
+            if (self.Config().BuildingType != BuildingType.House) return;
+            var pop = self.Scene().GetComponent<PopulationComponent>();
+            pop?.AddHouseCapacity(5);
         }
     }
 }

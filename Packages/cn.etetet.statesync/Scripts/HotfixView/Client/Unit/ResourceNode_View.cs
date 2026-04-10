@@ -44,5 +44,24 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
     }
+
+    /// <summary>
+    /// 资源节点复活后重新显示 GameObject
+    /// </summary>
+    [Event(SceneType.Village)]
+    public class ResourceNodeRespawned_ShowView : AEvent<Scene, ResourceNodeRespawned>
+    {
+        protected override async ETTask Run(Scene scene, ResourceNodeRespawned args)
+        {
+            await ETTask.CompletedTask;
+            UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
+            Unit node = unitComponent?.Get(args.NodeUnitId);
+            if (node == null) return;
+
+            GameObjectComponent goComp = node.GetComponent<GameObjectComponent>();
+            if (goComp?.GameObject != null)
+                goComp.GameObject.SetActive(true);
+        }
+    }
 }
 

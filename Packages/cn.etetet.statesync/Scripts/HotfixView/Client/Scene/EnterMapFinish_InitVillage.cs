@@ -48,7 +48,7 @@ namespace ET.Client
             // ── 5. 创建村民并分配任务 ─────────────────────────
             foreach (var info in response.Villagers)
             {
-                Unit villager = VillageFactory.CreateVillager(currentScene, info.ConfigId,
+                Unit villager = VillageFactory.CreateVillagerForce(currentScene, info.ConfigId,
                     new float3(info.Position.x, info.Position.y, info.Position.z));
 
                 if (info.GatheringResourceType != 0)

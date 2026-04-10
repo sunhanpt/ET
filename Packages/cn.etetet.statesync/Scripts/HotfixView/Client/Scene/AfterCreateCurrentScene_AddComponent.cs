@@ -10,6 +10,7 @@ namespace ET.Client
             // 村庄模拟经营组件
             scene.AddComponent<VillageComponent>();
             scene.AddComponent<StorehouseComponent>();
+            scene.AddComponent<PopulationComponent>();
             await ETTask.CompletedTask;
         }
     }

@@ -56,3 +56,21 @@ message G2M_GetVillageSnapshotResponse // IResponse
 	int32 StorageCapacity = 8;
 }
 
+// ResponseType G2M_BuildResponse
+message G2M_Build // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 BuildingConfigId = 3;
+	float X = 4;
+	float Y = 5;
+	float Z = 6;
+}
+
+message G2M_BuildResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+

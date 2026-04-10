@@ -68,6 +68,7 @@ namespace ET
             {
                 bc.State = BuildingState.Built;
                 bc.ApplyStorageBonus();
+                bc.ApplyHouseBonus();
                 EventSystem.Instance.Publish(scene, new BuildingFinished() { BuildingUnitId = building.Id });
             }
 

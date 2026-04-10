@@ -53,6 +53,14 @@
         {
             self.GathererUnitId = 0;
         }
+
+        /// <summary>复活资源节点：重置储量，并发布 Respawned 事件</summary>
+        public static void Respawn(this ResourceNodeComponent self)
+        {
+            self.CurrentAmount  = self.Config().MaxAmount;
+            self.GathererUnitId = 0;
+            EventSystem.Instance.Publish(self.Scene(), new ResourceNodeRespawned() { NodeUnitId = self.GetParent<Unit>().Id });
+        }
     }
 }
 

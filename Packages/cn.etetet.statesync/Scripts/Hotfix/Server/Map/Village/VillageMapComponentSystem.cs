@@ -100,5 +100,54 @@ namespace ET.Server
                 stocks.Add(stock);
             }
         }
+
+        // ── 服务端建造辅助方法 ─────────────────────────────────────
+
+        public static bool CanAfford(this VillageMapComponent self, BuildingConfig cfg)
+        {
+            self.Stocks.TryGetValue(ResourceType.Wood,  out int wood);
+            self.Stocks.TryGetValue(ResourceType.Stone, out int stone);
+            self.Stocks.TryGetValue(ResourceType.Food,  out int food);
+            return wood >= cfg.CostWood && stone >= cfg.CostStone && food >= cfg.CostFood;
+        }
+
+        public static void ConsumeStock(this VillageMapComponent self, int resourceType, int amount)
+        {
+            if (amount <= 0) return;
+            self.Stocks.TryGetValue(resourceType, out int current);
+            self.Stocks[resourceType] = System.Math.Max(0, current - amount);
+        }
+
+        public static void AddBuilding(this VillageMapComponent self, int configId, Unity.Mathematics.float3 pos, int state)
+        {
+            self.Buildings.Add(new VillageBuildingData
+            {
+                ConfigId = configId,
+                Position = pos,
+                State    = state,
+            });
+        }
+
+        /// <summary>等待建造时间后将建筑状态更新为已建成</summary>
+        public static async ETTask ScheduleBuildComplete(this VillageMapComponent self, int configId, Unity.Mathematics.float3 pos, int buildTimeMs)
+        {
+            await self.Scene().Root().GetComponent<TimerComponent>().WaitAsync(buildTimeMs);
+            if (self.IsDisposed) return;
+
+            for (int i = 0; i < self.Buildings.Count; i++)
+            {
+                var b = self.Buildings[i];
+                if (b.ConfigId == configId && b.Position.Equals(pos) && b.State == (int)BuildingState.UnderConstruction)
+                {
+                    self.Buildings[i] = new VillageBuildingData
+                    {
+                        ConfigId = b.ConfigId,
+                        Position = b.Position,
+                        State    = (int)BuildingState.Built,
+                    };
+                    break;
+                }
+            }
+        }
     }
 }

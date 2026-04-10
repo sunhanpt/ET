@@ -227,3 +227,20 @@ message M2C_EnterVillage // ISessionResponse
 	repeated VillageResourceStock Stocks        = 7;
 	int32 StorageCapacity = 8;
 }
+
+// ResponseType M2C_BuildResponse
+message C2M_Build // ISessionRequest
+{
+	int32 RpcId = 1;
+	int32 BuildingConfigId = 2;
+	float X = 3;
+	float Y = 4;
+	float Z = 5;
+}
+
+message M2C_BuildResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

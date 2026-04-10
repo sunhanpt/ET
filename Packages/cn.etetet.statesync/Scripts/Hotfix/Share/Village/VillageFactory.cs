@@ -4,8 +4,26 @@ namespace ET
 {
     public static class VillageFactory
     {
-        /// <summary>创建村民 Unit</summary>
+        /// <summary>创建村民 Unit（会检查人口上限）</summary>
         public static Unit CreateVillager(Scene scene, int villagerConfId, float3 position)
+        {
+            // 人口上限检查
+            PopulationComponent pop = scene.GetComponent<PopulationComponent>();
+            if (pop != null && pop.IsFull())
+            {
+                Log.Warning("人口已达上限，无法创建更多村民");
+                return null;
+            }
+            return CreateVillagerInternal(scene, villagerConfId, position);
+        }
+
+        /// <summary>强制创建村民（不检查人口上限，用于快照恢复）</summary>
+        public static Unit CreateVillagerForce(Scene scene, int villagerConfId, float3 position)
+        {
+            return CreateVillagerInternal(scene, villagerConfId, position);
+        }
+
+        private static Unit CreateVillagerInternal(Scene scene, int villagerConfId, float3 position)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             VillageComponent village    = scene.GetComponent<VillageComponent>();
