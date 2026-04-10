@@ -32,4 +32,11 @@
     {
         public Unit Unit;
     }
+    
+    public struct BuildMenuOpen
+    {
+    }
+    public struct BuildMenuClose
+    {
+    }
 }

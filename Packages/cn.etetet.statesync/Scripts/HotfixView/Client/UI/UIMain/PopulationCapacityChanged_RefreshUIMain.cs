@@ -10,7 +10,7 @@ namespace ET.Client
         {
             await ETTask.CompletedTask;
             Scene root = currentScene.Root();
-            UIMainComponent uiMain = root.GetComponent<UIComponent>()?.GetChild<UI>(UIType.UIMain)?.GetComponent<UIMainComponent>();
+            UIMainComponent uiMain = UIHelper.Get(root, UIType.UIMain)?.GetComponent<UIMainComponent>();
             uiMain?.RefreshPopulationDisplay();
         }
     }
