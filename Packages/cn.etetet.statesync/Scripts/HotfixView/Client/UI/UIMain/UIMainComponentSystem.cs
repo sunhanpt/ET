@@ -5,6 +5,9 @@ namespace ET.Client
 {
     [EntitySystemOf(typeof(UIMainComponent))]
     [FriendOf(typeof(UIMainComponent))]
+    [FriendOf(typeof(StorehouseComponent))]
+    [FriendOf(typeof(VillageComponent))]
+    [FriendOf(typeof(PopulationComponent))]
     public static partial class UIMainComponentSystem
     {
         [EntitySystem]

@@ -963,7 +963,7 @@ namespace ET
     [MemoryPackable]
     [Message(StateSyncOuter.C2M_EnterVillage)]
     [ResponseType(nameof(M2C_EnterVillage))]
-    public partial class C2M_EnterVillage : MessageObject, ILocationRequest
+    public partial class C2M_EnterVillage : MessageObject, ISessionRequest
     {
         public static C2M_EnterVillage Create(bool isFromPool = false)
         {
@@ -988,7 +988,7 @@ namespace ET
 
     [MemoryPackable]
     [Message(StateSyncOuter.M2C_EnterVillage)]
-    public partial class M2C_EnterVillage : MessageObject, ILocationResponse
+    public partial class M2C_EnterVillage : MessageObject, ISessionResponse
     {
         public static M2C_EnterVillage Create(bool isFromPool = false)
         {
@@ -1039,6 +1039,81 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(StateSyncOuter.C2M_Build)]
+    [ResponseType(nameof(M2C_BuildResponse))]
+    public partial class C2M_Build : MessageObject, ISessionRequest
+    {
+        public static C2M_Build Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<C2M_Build>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int BuildingConfigId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public float X { get; set; }
+
+        [MemoryPackOrder(3)]
+        public float Y { get; set; }
+
+        [MemoryPackOrder(4)]
+        public float Z { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.BuildingConfigId = default;
+            this.X = default;
+            this.Y = default;
+            this.Z = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncOuter.M2C_BuildResponse)]
+    public partial class M2C_BuildResponse : MessageObject, ISessionResponse
+    {
+        public static M2C_BuildResponse Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<M2C_BuildResponse>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
     public static class StateSyncOuter
     {
         public const ushort RouterSync = 11002;
@@ -1074,5 +1149,7 @@ namespace ET
         public const ushort VillageResourceStock = 11032;
         public const ushort C2M_EnterVillage = 11033;
         public const ushort M2C_EnterVillage = 11034;
+        public const ushort C2M_Build = 11035;
+        public const ushort M2C_BuildResponse = 11036;
     }
 }

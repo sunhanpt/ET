@@ -13,7 +13,7 @@ namespace ET.Server
             VillageMapComponent mapComp = scene.GetComponent<VillageMapComponent>();
             if (mapComp == null)
             {
-                response.Error   = ErrorCode.ERR_Error;
+                response.Error   = ErrorCode.ERR_VillageMapComponentNotFound;
                 response.Message = "VillageMapComponent not found";
                 return;
             }
@@ -23,7 +23,7 @@ namespace ET.Server
             // 检查资源是否足够
             if (!mapComp.CanAfford(cfg))
             {
-                response.Error   = ErrorCode.ERR_Error;
+                response.Error   = ErrorCode.ERR_VillageBuildResourceNotEnough;
                 response.Message = $"资源不足，无法建造: {cfg.Name}";
                 return;
             }

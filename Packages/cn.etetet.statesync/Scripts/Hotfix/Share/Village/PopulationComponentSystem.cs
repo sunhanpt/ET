@@ -2,6 +2,7 @@ namespace ET
 {
     [EntitySystemOf(typeof(PopulationComponent))]
     [FriendOf(typeof(PopulationComponent))]
+    [FriendOf(typeof(VillageComponent))]
     public static partial class PopulationComponentSystem
     {
         [EntitySystem]

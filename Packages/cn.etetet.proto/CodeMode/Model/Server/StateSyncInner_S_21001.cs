@@ -131,7 +131,7 @@ namespace ET
 
     [MemoryPackable]
     [Message(StateSyncInner.G2M_PlayerLeave)]
-    public partial class G2M_PlayerLeave : MessageObject
+    public partial class G2M_PlayerLeave : MessageObject, IMessage
     {
         public static G2M_PlayerLeave Create(bool isFromPool = false)
         {
@@ -241,6 +241,85 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(StateSyncInner.G2M_Build)]
+    [ResponseType(nameof(G2M_BuildResponse))]
+    public partial class G2M_Build : MessageObject, IRequest
+    {
+        public static G2M_Build Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<G2M_Build>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int BuildingConfigId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public float X { get; set; }
+
+        [MemoryPackOrder(4)]
+        public float Y { get; set; }
+
+        [MemoryPackOrder(5)]
+        public float Z { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+            this.BuildingConfigId = default;
+            this.X = default;
+            this.Y = default;
+            this.Z = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(StateSyncInner.G2M_BuildResponse)]
+    public partial class G2M_BuildResponse : MessageObject, IResponse
+    {
+        public static G2M_BuildResponse Create(bool isFromPool = false)
+        {
+            return ObjectPool.Fetch<G2M_BuildResponse>(isFromPool);
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Recycle(this);
+        }
+    }
+
     public static class StateSyncInner
     {
         public const ushort M2A_Reload = 21002;
@@ -250,5 +329,7 @@ namespace ET
         public const ushort G2M_PlayerLeave = 21006;
         public const ushort G2M_GetVillageSnapshot = 21007;
         public const ushort G2M_GetVillageSnapshotResponse = 21008;
+        public const ushort G2M_Build = 21009;
+        public const ushort G2M_BuildResponse = 21010;
     }
 }
